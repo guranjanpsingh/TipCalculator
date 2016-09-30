@@ -84,6 +84,7 @@ class ViewController: UIViewController {
     
     @IBAction func tipUnitChanged(_ sender: UISegmentedControl) {
         currentTipUnit = TipUnit(rawValue:sender.selectedSegmentIndex)!
+        CalculateTip()
     }
     
     @IBAction func onTapAway(_ sender: UITapGestureRecognizer) {
