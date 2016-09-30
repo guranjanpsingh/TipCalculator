@@ -24,6 +24,7 @@ The following **additional** features are implemented:
 - [ ] List anything else that you can get done to improve the app functionality!
 * [X] Allowing the user to change total bill will reflect changes in the tip amount
 * [X] Users can pick between percentage and dollar as tip method.
+* [X] Split cheque amount with upto 10 people
 
 
 ## Video Walkthrough 
