@@ -54,6 +54,27 @@
                                     <action selector="tipUnitChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="fzk-8B-SNg"/>
                                 </connections>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Split Cheque Between: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KrO-N7-tXR">
+                                <frame key="frameInset" minX="16" minY="400" width="176" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="erE-wn-Bt1">
+                                <frame key="frameInset" minX="14" minY="429" width="347" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="splitChequeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="TdV-m3-s6f"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxv-5A-fnr">
+                                <frame key="frameInset" minX="200" minY="400" width="32" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
@@ -80,6 +101,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="billAmount" destination="tva-He-UUp" id="FrB-Bv-MXN"/>
+                        <outlet property="currentSplitChequeSliderValue" destination="erE-wn-Bt1" id="8nS-as-eRO"/>
+                        <outlet property="selectedTipMethod" destination="FBP-L8-vza" id="cTP-Db-Atl"/>
+                        <outlet property="splitingChequeBetween" destination="dxv-5A-fnr" id="tVa-NN-kwK"/>
                         <outlet property="tipAmount" destination="2pE-j6-KYV" id="YQJ-3d-etN"/>
                         <outlet property="totalBill" destination="H0t-0E-sXT" id="PC8-jT-Vkt"/>
                     </connections>

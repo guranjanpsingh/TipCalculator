@@ -15,6 +15,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalBill: UITextField!
     
     fileprivate var currentTipUnit: TipUnit = TipUnit.percent
+    fileprivate var defaultTipValuesArray = [18.0, 20.0, 25.0]
+    
+    @IBOutlet weak var splitingChequeBetween: UILabel!
+    let defaults = UserDefaults.standard
+
+    @IBOutlet weak var selectedTipMethod: UISegmentedControl!
+    
+    @IBOutlet weak var currentSplitChequeSliderValue: UISlider!
+    override func viewDidLoad() {
+        let currentDefaultTipIndex = defaults.integer(forKey: "DefaultTipPercentage")
+        currentTipAmount = defaultTipValuesArray[currentDefaultTipIndex]
+    }
     
     fileprivate enum TipUnit:Int  {
         case percent
@@ -35,13 +47,13 @@ class ViewController: UIViewController {
     
     fileprivate var currentBillAmount: Double {
         get {
-            if (billAmount.text != ""){
-                return Double(billAmount.text!)!
+            if (billAmount.text != "" && billAmount.text! != "$"){
+                return Double(billAmount.text!.replacingOccurrences(of: "$", with: ""))!
             }
             return 0.0
         }
         set {
-            billAmount.text = String(newValue)
+            billAmount.text = String(format: "$ %.2f", newValue)
         }
     }
     
@@ -53,44 +65,48 @@ class ViewController: UIViewController {
             return 0.0
         }
         set {
-            totalBill.text = String(format: "$%.2f",newValue)
+            totalBill.text = String(format: "$%.2f", newValue)
         }
     }
     
     @IBAction func billAmountDidChange(_ sender: UITextField) {
-        if (currentTipUnit == TipUnit.percent){
-            currentTotalBill = currentBillAmount + (currentBillAmount * (currentTipAmount/100))
-        }
-        else {
-            currentTotalBill = currentBillAmount + currentTipAmount
-        }
+        CalculateTip()
     }
     
     @IBAction func tipAmountDidChange(_ sender: UITextField) {
-        if (currentTipUnit == TipUnit.percent){
-            currentTotalBill = currentBillAmount + (currentBillAmount * (currentTipAmount/100))
-        }
-        else {
-            currentTotalBill = currentBillAmount + currentTipAmount
-        }
+        CalculateTip()
     }
+    
     @IBAction func totalDidChange(_ sender: UITextField) {
-            print(currentBillAmount)
-            print(currentTotalBill)
-            currentTipAmount = currentTotalBill - currentBillAmount
-        print("Total Changed")
+        selectedTipMethod.selectedSegmentIndex = TipUnit.dollar.rawValue // select method as dollars.
+        currentTipAmount = currentTotalBill - currentBillAmount
     }
+    
     @IBAction func tipUnitChanged(_ sender: UISegmentedControl) {
         currentTipUnit = TipUnit(rawValue:sender.selectedSegmentIndex)!
-        if (currentTipUnit == TipUnit.percent){
-            currentTotalBill = currentBillAmount + (currentBillAmount * (currentTipAmount/100))
-        }
-        else {
-            currentTotalBill = currentBillAmount + currentTipAmount
-        }
     }
+    
     @IBAction func onTapAway(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
+    }
+    @IBAction func splitChequeChanged(_ sender: UISlider) {
+        sender.value = roundf(sender.value)
+        splitingChequeBetween.text = String(Int(sender.value))
+        CalculateTip()
+    }
+    
+    func CalculateTip() {
+        var total = 0.0
+        if (currentTipUnit == TipUnit.percent){
+            total = currentBillAmount + (currentBillAmount * (currentTipAmount/100))
+        }
+        else {
+            total = currentBillAmount + currentTipAmount
+        }
+        print(total)
+        print(currentSplitChequeSliderValue.value)
+        currentTotalBill = total / Double(currentSplitChequeSliderValue.value)
+        print(currentTotalBill)
     }
 }
 
